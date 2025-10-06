@@ -3,4 +3,17 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<form method="post" asp-controller="Home" asp-action="Privacy">
+    <input type="text" name="name" />
+    <input type="text" name="description" />
+    <input type="text" name="gender" />
+    <input type="text" name="photoUrl" />
+    <select name="specie">
+        <option value="reptil">Reptil</option>
+        <option value="mamifero">Mamifero</option>
+        <option value="marino">Marino</option>
+        <option value="roedores">Roedores</option>
+    </select>
+    <button type="submit">Enviar</button>
+</form>
+

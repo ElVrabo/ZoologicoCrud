@@ -1,8 +1,15 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@model ZoologicoCrud.DTOS.AnimalReadDto
+@model List<ZoologicoCrud.DTOS.AnimalReadDto>
+
 <div class="text-center">
-    <h1 class="display-4">@Html.DisplayNameFor(a=>a.Name)</h1>
-    <p>@Html.DisplayFor(a=>a.Name)</p>
+    <h1 class="display-4">Animales del Zoológico</h1>
+
+    @foreach (var animal in Model)
+    {
+        <h2>@animal.Name</h2>
+        <p>@animal.Description</p>
+        <p>@animal.Gender</p>
+    }
 </div>

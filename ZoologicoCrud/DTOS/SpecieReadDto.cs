@@ -4,7 +4,7 @@ namespace ZoologicoCrud.DTOS
 {
     public class SpecieReadDto
     {
-        [Display(Name ="Tipo de especie")];
+        [Display(Name ="Tipo de especie")]
         public string Name { get; set; }
 
     }

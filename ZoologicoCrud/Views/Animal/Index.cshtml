@@ -1,0 +1,11 @@
+﻿
+@model List<ZoologicoCrud.DTOS.AnimalReadDto>;
+
+
+    <h1>Listado de animales</h1>
+@foreach(var animal in Model)
+{
+    <h1>@(animal.Name)</h1>
+    <p>@(animal.Description)</p>
+    <p>@(animal.Gender)</p>
+}

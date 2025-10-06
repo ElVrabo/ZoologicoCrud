@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using ZoologicoCrud.Data;
 using ZoologicoCrud.DTOS;
 using ZoologicoCrud.Models;
 
@@ -8,10 +9,12 @@ namespace ZoologicoCrud.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly AppDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, AppDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -28,15 +31,34 @@ namespace ZoologicoCrud.Controllers
             {
                 Id = 2,
                 Name = "Tigre",
-                Description ="Hambre",
-                Gender ="Macho"
+                Description ="Feroz",
+                Gender ="Hembra"
             }
             };
             return View(animales);
         }
-
-        public IActionResult Privacy()
+        [HttpGet]
+        public IActionResult TableAnimals()
         {
+            var animals = _context.Animals.ToList();
+            return View(animals);
+        }
+
+        [HttpPost]
+        public IActionResult Privacy(AnimalCreateDto dto )
+        {
+           
+             var animal = new Animal
+            {
+                Name = dto.Name,
+                Description = dto.Description,
+                Gender = dto.Gender,
+                FotoUrl = dto.FotoUrl,
+            };
+            _context.Animals.Add(animal);
+            _context.SaveChanges();
+            
+            
             return View();
         }
 

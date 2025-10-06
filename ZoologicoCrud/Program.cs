@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ZoologicoCrud.Data;
+using ZoologicoCrud.Services.Implementations;
+using ZoologicoCrud.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,10 @@ builder.Services.AddControllersWithViews();
 var connection = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("la cadena de conexion default no se encontro");
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
+
+#region Services
+builder.Services.AddScoped<IAnimalService,AnimalService>();
+#endregion
 
 var app = builder.Build();
 
