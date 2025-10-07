@@ -25,15 +25,28 @@ namespace ZoologicoCrud.Services.Implementations
                     Name = a.Name,
                     Description = a.Description,
                     Gender = a.Gender,
+                    FotoUrl = a.FotoUrl,
                 }).ToListAsync();
             return animals;
 
         }
-        public async Task<AnimalReadDto> GetByIdAsync()
+        public async Task<AnimalReadDto> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var animal = await _context.Animals
+                .Where(a => a.Id == id)
+                .Select(a => new AnimalReadDto
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    Description = a.Description,
+                    Gender = a.Gender,
+                }).FirstOrDefaultAsync();
+            if (animal == null)
+                Console.WriteLine("El animal con ese id no se encontro");
+            return animal;
         }
-        public async Task AddAsync(AnimalCreateDto animalCreateDto) {
+        public async Task AddAsync(AnimalCreateDto animalCreateDto)
+        {
             var animal = new Animal
             {
                 Name = animalCreateDto.Name,
@@ -41,6 +54,34 @@ namespace ZoologicoCrud.Services.Implementations
                 Gender = animalCreateDto.Gender,
                 FotoUrl = animalCreateDto.FotoUrl,
             };
+            await _context.AddAsync(animal);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(int id, AnimalCreateDto animalCreateDto)
+        {
+            var animal = await _context.Animals.FindAsync(animalCreateDto.Id);
+            if(animal == null)
+                Console.WriteLine("El producto no se encontro");
+
+            animal.Name = animalCreateDto.Name;
+            animal.Description = animalCreateDto.Description;
+            animal.Gender = animalCreateDto.Gender;
+            animal.FotoUrl = animalCreateDto.FotoUrl;
+            _context.Animals.Update(animal);
+            await _context.SaveChangesAsync();
+                    
+            
+
+        }
+        public async Task DeleteAsync(int id)
+        {
+            var animal = await _context.Animals.FindAsync(id);
+            if (animal == null)
+                Console.WriteLine("No se encontro al animal para eliminar");
+            _context.Animals.Remove(animal);
+            await _context.SaveChangesAsync();
+
         }
     }
 }

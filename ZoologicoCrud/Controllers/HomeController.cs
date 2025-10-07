@@ -44,19 +44,26 @@ namespace ZoologicoCrud.Controllers
             return View(animals);
         }
 
+        [HttpGet]
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
         [HttpPost]
-        public IActionResult Privacy(AnimalCreateDto dto )
+        public async Task<IActionResult> Privacy(AnimalCreateDto dto )
         {
            
              var animal = new Animal
             {
+                 Id = dto.Id,
                 Name = dto.Name,
                 Description = dto.Description,
                 Gender = dto.Gender,
                 FotoUrl = dto.FotoUrl,
             };
             _context.Animals.Add(animal);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             
             
             return View();

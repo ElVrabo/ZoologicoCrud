@@ -1,11 +1,109 @@
-﻿
-@model List<ZoologicoCrud.DTOS.AnimalReadDto>;
+﻿@model IEnumerable<ZoologicoCrud.DTOS.AnimalReadDto>
 
-
-    <h1>Listado de animales</h1>
-@foreach(var animal in Model)
-{
-    <h1>@(animal.Name)</h1>
-    <p>@(animal.Description)</p>
-    <p>@(animal.Gender)</p>
+@{
+    ViewData["Title"] = "Listado de animales";
 }
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-success">
+            <i class="bi bi-paw"></i> @ViewData["Title"]
+        </h2>
+        <a asp-action="Create" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Nuevo Animal
+        </a>
+    </div>
+
+    <!-- Mensajes de éxito o error -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Tabla de animales -->
+    <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-body p-4">
+            <div class="table-responsive">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-success text-center">
+                        <tr>
+                            <th>@Html.DisplayNameFor(a => a.FotoUrl)</th>
+                            <th>@Html.DisplayNameFor(a => a.Name)</th>
+                            <th>@Html.DisplayNameFor(a => a.Description )</th>
+                            <th>@Html.DisplayNameFor(a=> a.Gender)</th>
+  
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var animal in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(animal.FotoUrl))
+                                        {
+                                            <img src="@animal.FotoUrl" alt="Foto de @animal.Name"
+                                                 class="rounded-circle" style="width: 60px; height: 60px; object-fit: cover;" />
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Sin imagen</span>
+                                        }
+                                    </td>
+                                    <td class="fw-semibold">@animal.Name</td>
+                                    <td>@animal.Description</td>
+                                    <td>
+                                        @if (animal.Gender == "Macho")
+                                        {
+                                            <span class="badge bg-primary">Macho</span>
+                                        }
+                                        else if (animal.Gender == "Hembra")
+                                        {
+                                            <span class="badge bg-pink text-white" style="background-color: #e83e8c;">Hembra</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">N/A</span>
+                                        }
+                                    </td>
+                                    @* <td>@animal.SpecieName</td> *@
+                                    <td>
+                                        @* <a href="@Url.Action('Details')" class="btn btn-outline-success btn-sm">
+                                            <i class="bi bi-eye">Detalles</i>
+                                        </a> *@
+                                        <a href="@Url.Action("Edit", "Animal", new {id = @animal.Id})" class="btn btn-outline-primary btn-sm">
+                                            <i class="bi bi-pencil-square">Editar</i>
+                                        </a>
+                                        @* <a asp-action="Delete" asp-route-id="@animal.Id" class="btn btn-outline-danger btn-sm">
+                                            <i class="bi bi-trash">Eliminar</i>
+                                        </a> *@
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-muted">No hay animales registrados.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

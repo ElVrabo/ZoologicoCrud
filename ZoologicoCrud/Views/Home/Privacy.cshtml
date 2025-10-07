@@ -1,14 +1,21 @@
-﻿@{
+﻿@model ZoologicoCrud.DTOS.AnimalCreateDto
+@{
+
     ViewData["Title"] = "Privacy Policy";
 }
 <h1>@ViewData["Title"]</h1>
 
 <form method="post" asp-controller="Home" asp-action="Privacy">
-    <input type="text" name="name" />
-    <input type="text" name="description" />
-    <input type="text" name="gender" />
-    <input type="text" name="photoUrl" />
-    <select name="specie">
+    <label asp-for="Name"  ></label>
+    <input type="text" asp-for="Name" />
+    <label asp-for="Description"></label>
+    <input type="text" asp-for="Description" />
+    <label asp-for="Gender"></label>
+    <input type="text" asp-for="Gender" />
+    <label asp-for="FotoUrl"></label>
+    <input type="text" asp-for="FotoUrl" />
+    <label asp-for="SpecieId"></label>
+    <select asp-for="SpecieId">
         <option value="reptil">Reptil</option>
         <option value="mamifero">Mamifero</option>
         <option value="marino">Marino</option>
