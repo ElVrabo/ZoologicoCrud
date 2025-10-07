@@ -14,6 +14,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(conn
 
 #region Services
 builder.Services.AddScoped<IAnimalService,AnimalService>();
+builder.Services.AddScoped<ISpecieService,SpecieService>();
 #endregion
 
 var app = builder.Build();
