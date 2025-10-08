@@ -43,6 +43,7 @@
                             <th>@Html.DisplayNameFor(a => a.Name)</th>
                             <th>@Html.DisplayNameFor(a => a.Description )</th>
                             <th>@Html.DisplayNameFor(a=> a.Gender)</th>
+                            <th>@Html.DisplayNameFor(a=> a.SpecieId)</th>
   
                             <th>Acciones</th>
                         </tr>
@@ -80,17 +81,17 @@
                                             <span class="badge bg-secondary">N/A</span>
                                         }
                                     </td>
-                                    @* <td>@animal.SpecieName</td> *@
+                                     <td>@animal.SpecieId</td> *
                                     <td>
-                                        @* <a href="@Url.Action('Details')" class="btn btn-outline-success btn-sm">
+                                         <a href="@Url.Action("Details","Animal", new {id = animal.Id})" class="btn btn-outline-success btn-sm">
                                             <i class="bi bi-eye">Detalles</i>
-                                        </a> *@
+                                        </a> 
                                         <a href="@Url.Action("Edit", "Animal", new {id = @animal.Id})" class="btn btn-outline-primary btn-sm">
                                             <i class="bi bi-pencil-square">Editar</i>
                                         </a>
-                                        @* <a asp-action="Delete" asp-route-id="@animal.Id" class="btn btn-outline-danger btn-sm">
+                                         <a href="@Url.Action("Delete","Animal", new{id = animal.Id})" class="btn btn-outline-danger btn-sm">
                                             <i class="bi bi-trash">Eliminar</i>
-                                        </a> *@
+                                        </a> 
                                     </td>
                                 </tr>
                             }
@@ -106,4 +107,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

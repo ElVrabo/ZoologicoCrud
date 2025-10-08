@@ -1,1 +1,5 @@
-﻿<h1>Listado de especies</h1>
+﻿@if (TempData["SuccessAlert"] != null)
+{
+    <h1>@TempData["SuccessAlert"]</h1>
+}
+<h1>Listado de especies</h1>

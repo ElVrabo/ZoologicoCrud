@@ -26,6 +26,7 @@ namespace ZoologicoCrud.Services.Implementations
                     Description = a.Description,
                     Gender = a.Gender,
                     FotoUrl = a.FotoUrl,
+                    SpecieId = a.SpecieId
                 }).ToListAsync();
             return animals;
 
@@ -40,6 +41,9 @@ namespace ZoologicoCrud.Services.Implementations
                     Name = a.Name,
                     Description = a.Description,
                     Gender = a.Gender,
+                    FotoUrl = a.FotoUrl,
+                    SpecieId = a.SpecieId
+                    
                 }).FirstOrDefaultAsync();
             if (animal == null)
                 Console.WriteLine("El animal con ese id no se encontro");
@@ -53,6 +57,7 @@ namespace ZoologicoCrud.Services.Implementations
                 Description = animalCreateDto.Description,
                 Gender = animalCreateDto.Gender,
                 FotoUrl = animalCreateDto.FotoUrl,
+                SpecieId = animalCreateDto.SpecieId
             };
             await _context.AddAsync(animal);
             await _context.SaveChangesAsync();
@@ -79,7 +84,7 @@ namespace ZoologicoCrud.Services.Implementations
             var animal = await _context.Animals.FindAsync(id);
             if (animal == null)
                 Console.WriteLine("No se encontro al animal para eliminar");
-            _context.Animals.Remove(animal);
+             _context.Animals.Remove(animal);
             await _context.SaveChangesAsync();
 
         }

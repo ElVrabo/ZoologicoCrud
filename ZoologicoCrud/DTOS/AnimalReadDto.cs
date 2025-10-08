@@ -18,10 +18,10 @@ namespace ZoologicoCrud.DTOS
         [Display(Name="Imagen")]
         public string FotoUrl { get; set; }
 
-        public int SpecieId { get; set; }
+        public int? SpecieId { get; set; }
         public int HabitadId { get; set; }
         public int CarerId { get; set; }
-
+        [Display(Name="Especie")]
         public string Specie { get; set; }
         public string Habitad { get; set; }
         public string Carer { get; set; }   

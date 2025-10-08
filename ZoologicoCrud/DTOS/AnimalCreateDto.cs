@@ -28,6 +28,7 @@ namespace ZoologicoCrud.DTOS
         public int CarerId { get; set; }
 
         [Display(Name = "Especie")]
+        [Required(ErrorMessage ="Debes de seleccionar una especie")]
         public int SpecieId { get; set; }
 
         [Display(Name = "Habitad")]

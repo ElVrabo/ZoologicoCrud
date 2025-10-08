@@ -1,9 +1,11 @@
 ﻿using Mapster;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ZoologicoCrud.Data;
 using ZoologicoCrud.DTOS;
 using ZoologicoCrud.Models;
+using ZoologicoCrud.Services.Implementations;
 using ZoologicoCrud.Services.Interfaces;
 
 namespace ZoologicoCrud.Controllers
@@ -11,10 +13,12 @@ namespace ZoologicoCrud.Controllers
     public class AnimalController : Controller
     {
         private readonly IAnimalService _animalService;
+        private readonly ISpecieService _specieService;
 
-        public AnimalController(IAnimalService animalService)
+        public AnimalController(IAnimalService animalService, ISpecieService specieService)
         {
             _animalService = animalService;
+            _specieService = specieService;
         }
         public async Task<IActionResult> Index()
         {
@@ -23,9 +27,13 @@ namespace ZoologicoCrud.Controllers
             var animals = await _animalService.GetAllAsync();
             return View(animals);
         }
-        [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            /*Se crea una lista a traves de las especies creadas*/
+            var species = await _specieService.GetAllAsync();
+            /*ViewBag es una forma dinamica de pasar datos desde el controlador hacia la vista*/
+            /*SelectList es una clase de ASP.NET que sirve para crear una lista desplegable*/
+            ViewBag.Species = new SelectList(species, "Id", "Name");
             return View();
         }
 
@@ -43,14 +51,50 @@ namespace ZoologicoCrud.Controllers
                 return View(animalCreateDto);
             }
         }
-        [HttpGet]
+        
         public async Task<IActionResult> Edit(int id)
         {
+            var species = await _specieService.GetAllAsync();
+            ViewBag.Species = new SelectList(species, "Id", "Name");
+
             AnimalReadDto animalReadDto = await _animalService.GetByIdAsync(id);
             //Se convierte el objeto animalReadDto a otro DTO
             //AnimalCreateDto, esto porque la vista de edicion usa el mismo formulario que la creacion
             var animalCreateDto = animalReadDto.Adapt<AnimalCreateDto>();
             return View(animalCreateDto);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, AnimalCreateDto animalCreateDto)
+        {
+            await _animalService.UpdateAsync(id, animalCreateDto);
+            TempData["SuccessMessage"] = "El animal se actualizo con exito";
+            return RedirectToAction("Index");
+        }
+
+        //public async Task<IActionResult> Delete()
+        //{
+        //    return View();
+        //}
+
+        public async Task<IActionResult> Details(int id) {
+            var animal = await _animalService.GetByIdAsync(id);
+            return View(animal);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                await _animalService.DeleteAsync(id);
+                TempData["SuccessMessage"] = "El animal se borro con exito";
+            }
+            catch (Exception ex) {
+                TempData["ErrorMessage"] = $"Ocurrio un problema{ex}";
+            }
+            //return View();
+            return RedirectToAction("Index");
         }
     }
 }

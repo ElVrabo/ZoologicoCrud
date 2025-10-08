@@ -44,12 +44,9 @@
 
                         <div class="mb-3">
                             <label asp-for="SpecieId" class="form-label fw-bold"></label>
-                            <select asp-for="SpecieId" class="form-select">
+                            <select asp-for="SpecieId" asp-items="ViewBag.Species" class="form-select">
                                 <option value="">Seleccione especie</option>
-                                <option value="1">Reptil</option>
-                                <option value="2">Mamífero</option>
-                                <option value="3">Marino</option>
-                                <option value="4">Roedor</option>
+                    
                             </select>
                             <span asp-validation-for="SpecieId" class="text-danger"></span>
                         </div>
