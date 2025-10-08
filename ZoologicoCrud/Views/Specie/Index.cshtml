@@ -1,5 +1,80 @@
-﻿@if (TempData["SuccessAlert"] != null)
-{
-    <h1>@TempData["SuccessAlert"]</h1>
+﻿@model IEnumerable<ZoologicoCrud.DTOS.SpecieReadDto>
+
+@{
+    ViewData["Title"] = "Listado de Especies";
 }
-<h1>Listado de especies</h1>
+
+@* @model IEnumerable<ZoologicoCrud.DTOS.AnimalReadDto> *@
+
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-success">
+            <i class="bi bi-paw"></i> @ViewData["Title"]
+        </h2>
+        <a asp-action="Create" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Nueva specie
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+   
+    <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-body p-4">
+            <div class="table-responsive">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-success text-center">
+                        <tr>
+                            
+                            <th>@Html.DisplayNameFor(a => a.Name)</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var animal in Model)
+                            {
+                                <tr>
+                                    <td>@animal.Name</td>
+                                    <td>
+                                     
+                                        <a href="@Url.Action("Edit", "Specie", new {id = @animal.Id})" class="btn btn-outline-success btn-sm">
+                                            <i class="bi bi-pencil-square">Editar</i>
+                                        </a>
+                                          
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-muted">No hay animales registrados.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>

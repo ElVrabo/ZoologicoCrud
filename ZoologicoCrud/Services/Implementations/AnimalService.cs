@@ -26,7 +26,7 @@ namespace ZoologicoCrud.Services.Implementations
                     Description = a.Description,
                     Gender = a.Gender,
                     FotoUrl = a.FotoUrl,
-                    SpecieId = a.SpecieId
+                    Specie = a.Specie.Name
                 }).ToListAsync();
             return animals;
 
@@ -42,7 +42,7 @@ namespace ZoologicoCrud.Services.Implementations
                     Description = a.Description,
                     Gender = a.Gender,
                     FotoUrl = a.FotoUrl,
-                    SpecieId = a.SpecieId
+                    Specie = a.Specie.Name
                     
                 }).FirstOrDefaultAsync();
             if (animal == null)
@@ -73,6 +73,7 @@ namespace ZoologicoCrud.Services.Implementations
             animal.Description = animalCreateDto.Description;
             animal.Gender = animalCreateDto.Gender;
             animal.FotoUrl = animalCreateDto.FotoUrl;
+            animal.SpecieId = animalCreateDto.SpecieId;
             _context.Animals.Update(animal);
             await _context.SaveChangesAsync();
                     

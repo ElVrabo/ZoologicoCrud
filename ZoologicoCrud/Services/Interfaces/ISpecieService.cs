@@ -2,9 +2,7 @@
 
 namespace ZoologicoCrud.Services.Interfaces
 {
-    public interface ISpecieService
+    public interface ISpecieService:IGenericService<SpecieReadDto,SpecieCreateDto,SpecieCreateDto>
     {
-        Task<IEnumerable<SpecieReadDto>> GetAllAsync();
-        Task AddAsync(SpecieCreateDto specieCreateDto);
     }
 }

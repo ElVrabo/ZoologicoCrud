@@ -54,6 +54,7 @@ namespace ZoologicoCrud.Controllers
         
         public async Task<IActionResult> Edit(int id)
         {
+
             var species = await _specieService.GetAllAsync();
             ViewBag.Species = new SelectList(species, "Id", "Name");
 

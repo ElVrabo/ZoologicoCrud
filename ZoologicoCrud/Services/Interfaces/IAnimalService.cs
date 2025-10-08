@@ -2,12 +2,7 @@
 
 namespace ZoologicoCrud.Services.Interfaces
 {
-    public interface IAnimalService
+    public interface IAnimalService :IGenericService<AnimalReadDto,AnimalCreateDto,AnimalCreateDto>
     {
-        Task<IEnumerable<AnimalReadDto>> GetAllAsync();
-        Task<AnimalReadDto> GetByIdAsync(int id);
-        Task AddAsync(AnimalCreateDto animal);
-        Task UpdateAsync(int id,AnimalCreateDto animal);
-        Task DeleteAsync(int id);
     }
 }

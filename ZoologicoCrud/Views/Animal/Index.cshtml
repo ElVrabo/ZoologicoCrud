@@ -14,7 +14,6 @@
         </a>
     </div>
 
-    <!-- Mensajes de éxito o error -->
     @if (TempData["SuccessMessage"] != null)
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -31,7 +30,7 @@
         </div>
     }
 
-    <!-- Tabla de animales -->
+   
     <div class="card shadow-sm border-0 rounded-3">
         <div class="card-body p-4">
             <div class="table-responsive">
@@ -43,7 +42,7 @@
                             <th>@Html.DisplayNameFor(a => a.Name)</th>
                             <th>@Html.DisplayNameFor(a => a.Description )</th>
                             <th>@Html.DisplayNameFor(a=> a.Gender)</th>
-                            <th>@Html.DisplayNameFor(a=> a.SpecieId)</th>
+                            <th>@Html.DisplayNameFor(a=> a.Specie)</th>
   
                             <th>Acciones</th>
                         </tr>
@@ -81,17 +80,19 @@
                                             <span class="badge bg-secondary">N/A</span>
                                         }
                                     </td>
-                                     <td>@animal.SpecieId</td> *
+                                     <td>@animal.Specie</td> *
                                     <td>
                                          <a href="@Url.Action("Details","Animal", new {id = animal.Id})" class="btn btn-outline-success btn-sm">
                                             <i class="bi bi-eye">Detalles</i>
                                         </a> 
-                                        <a href="@Url.Action("Edit", "Animal", new {id = @animal.Id})" class="btn btn-outline-primary btn-sm">
+                                        <a href="@Url.Action("Edit", "Animal", new {id = @animal.Id})" class="btn btn-outline-success btn-sm">
                                             <i class="bi bi-pencil-square">Editar</i>
                                         </a>
-                                         <a href="@Url.Action("Delete","Animal", new{id = animal.Id})" class="btn btn-outline-danger btn-sm">
-                                            <i class="bi bi-trash">Eliminar</i>
-                                        </a> 
+                                            <button type="submit" form="delete-form" class="btn btn-outline-danger btn-sm">
+                                                <i class="fas fa-trash-alt"></i> Eliminar
+                                            </button>
+                                            <form id="delete-form" method="post" action="@Url.Action("Delete", "Animal", new { id = @animal.Id })" class="d-none"></form>
+
                                     </td>
                                 </tr>
                             }
@@ -108,4 +109,5 @@
         </div>
     </div>
 </div>
+
 </div>
