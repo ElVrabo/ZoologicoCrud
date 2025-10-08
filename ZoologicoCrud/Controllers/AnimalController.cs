@@ -48,6 +48,11 @@ namespace ZoologicoCrud.Controllers
             catch(Exception ex) 
             {
                 TempData["ErrorMessage"] = "Ocurrió un error al registrar el animal.";
+                /*Se crea una lista a traves de las especies creadas*/
+                var species = await _specieService.GetAllAsync();
+                /*ViewBag es una forma dinamica de pasar datos desde el controlador hacia la vista*/
+                /*SelectList es una clase de ASP.NET que sirve para crear una lista desplegable*/
+                ViewBag.Species = new SelectList(species, "Id", "Name");
                 return View(animalCreateDto);
             }
         }

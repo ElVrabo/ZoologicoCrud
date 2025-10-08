@@ -6,13 +6,26 @@
 
 <div class="container mt-5">
     <div class="card shadow-lg rounded">
+        <!-- Encabezado -->
         <div class="card-header bg-success text-white text-center">
             <h3 class="mb-0">@ViewData["Title"]</h3>
         </div>
+
+        <!-- Cuerpo -->
         <div class="card-body p-4">
 
             <div class="row mt-4">
-                <div class="col-md-6">
+                <div class="col-md-6 offset-md-3 text-center">
+                    <!-- Imagen del animal -->
+                    <img src="@Model.FotoUrl"
+                         alt="Foto de animal"
+                         class="rounded-circle mb-4"
+                         style="width: 120px; height: 120px; object-fit: cover;" />
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-8">
                     <dl class="row">
                         <dt class="col-5 fw-bold">@Html.DisplayNameFor(model => model.Name):</dt>
                         <dd class="col-7">@Html.DisplayFor(model => model.Name)</dd>
@@ -22,24 +35,39 @@
 
                         <dt class="col-5 fw-bold">@Html.DisplayNameFor(model => model.Specie):</dt>
                         <dd class="col-7">@Html.DisplayFor(model => model.Specie)</dd>
+
                         <dt class="col-5 fw-bold">@Html.DisplayNameFor(model => model.Gender):</dt>
                         <dd class="col-7">@Html.DisplayFor(model => model.Gender)</dd>
                     </dl>
                 </div>
             </div>
 
+            <!-- Botones de acción -->
             <div class="text-center mt-4">
-                <a href="@Url.Action("Index", "Animal")" class="btn btn-outline-secondary px-4 py-2">
+                <a href="@Url.Action("Index", "Animal")"
+                   class="btn btn-outline-secondary px-4 py-2">
                     <i class="fas fa-arrow-left"></i> Volver a la lista
                 </a>
-                <a href="@Url.Action("Edit", "Animal", new { id = Model.Id })" class="btn btn-success text-white px-4 py-2 ms-2">
+
+                <a href="@Url.Action("Edit", "Animal", new { id = Model.Id })"
+                   class="btn btn-success text-white px-4 py-2 ms-2">
                     <i class="fas fa-edit"></i> Editar
                 </a>
-                <button type="submit" form="delete-form" class="btn btn-danger px-4 py-2 ms-2">
+
+                <button type="submit"
+                        form="delete-form"
+                        class="btn btn-danger px-4 py-2 ms-2">
                     <i class="fas fa-trash-alt"></i> Eliminar
                 </button>
             </div>
+
         </div>
     </div>
-    <form id="delete-form" method="post" action="@Url.Action("Delete", "Animal", new { id = Model.Id })" class="d-none"></form>
+
+    
+    <form id="delete-form"
+          method="post"
+          action="@Url.Action("Delete", "Animal", new { id = Model.Id })"
+          class="d-none">
+    </form>
 </div>

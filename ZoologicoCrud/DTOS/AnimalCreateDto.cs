@@ -22,7 +22,7 @@ namespace ZoologicoCrud.DTOS
 
         [Display(Name = "Imagen")]
         [Required(ErrorMessage = "La imagen es requerida")]
-        public string FotoUrl { get; set; }
+        public IFormFile File { get; set; }
 
         [Display(Name = "Cuidador")]
         public int CarerId { get; set; }

@@ -60,7 +60,7 @@ namespace ZoologicoCrud.Controllers
                 Name = dto.Name,
                 Description = dto.Description,
                 Gender = dto.Gender,
-                FotoUrl = dto.FotoUrl,
+                //FotoUrl = dto.FotoUrl,
             };
             _context.Animals.Add(animal);
             await _context.SaveChangesAsync();

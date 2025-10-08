@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using ZoologicoCrud.Data;
 using ZoologicoCrud.Services.Implementations;
 using ZoologicoCrud.Services.Interfaces;
+using ZoologicoCrud.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,10 @@ var connection = builder.Configuration.GetConnectionString("DefaultConnection") 
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
 
+#region Settings
+builder.Services.Configure<UploadSettings>(
+    builder.Configuration.GetSection("UploadSettings"));
+#endregion
 #region Services
 builder.Services.AddScoped<IAnimalService,AnimalService>();
 builder.Services.AddScoped<ISpecieService,SpecieService>();

@@ -13,7 +13,7 @@
                 </div>
 
                 <div class="card-body p-4">
-                    <form method="post">
+                    <form method="post" enctype="multipart/form-data">
                         <div class="mb-3">
                             <label asp-for="Name" class="form-label fw-bold"></label>
                             <input asp-for="Name" class="form-control" placeholder="Ingrese el nombre del animal" />
@@ -37,9 +37,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="FotoUrl" class="form-label fw-bold"></label>
-                            <input asp-for="FotoUrl" class="form-control" placeholder="Ingrese la URL de la foto" />
-                            <span asp-validation-for="FotoUrl" class="text-danger"></span>
+                            <label asp-for="File" class="form-label fw-bold"></label>
+                            <input asp-for="File" class="form-control" placeholder="Ingrese la URL de la foto" />
+                            <span asp-validation-for="File" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
