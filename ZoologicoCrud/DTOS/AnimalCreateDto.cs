@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ZoologicoCrud.Constants;
 
 namespace ZoologicoCrud.DTOS
 {
@@ -9,26 +10,27 @@ namespace ZoologicoCrud.DTOS
         //entidad Animal 
 
         [Display(Name = "Nombre")]
-        [Required(ErrorMessage = "El nombre es requerido")]
+        [Required(ErrorMessage = Fields.Animal.NameRequired)]
         public string Name { get; set; }
 
         [Display(Name = "Descripcion")]
-        [Required(ErrorMessage = "La descripcion es requerida")]
+        [Required(ErrorMessage = Fields.Animal.DescriptionRequired)]
         public string Description { get; set; }
 
         [Display(Name = "Genero")]
-        [Required(ErrorMessage = "El genero es requerido")]
+        [Required(ErrorMessage = Fields.Animal.GenderRequired)]
+        [RegularExpression("Macho|Hembra", ErrorMessage = "El genero debe ser Macho o Hembra")]
         public string Gender { get; set; }
 
         [Display(Name = "Imagen")]
-        [Required(ErrorMessage = "La imagen es requerida")]
+        [Required(ErrorMessage = Fields.Animal.ImageRequired)]
         public IFormFile File { get; set; }
 
         [Display(Name = "Cuidador")]
         public int CarerId { get; set; }
 
         [Display(Name = "Especie")]
-        [Required(ErrorMessage ="Debes de seleccionar una especie")]
+        [Required(ErrorMessage = Fields.Animal.SpecieRequired)]
         public int SpecieId { get; set; }
 
         [Display(Name = "Habitad")]

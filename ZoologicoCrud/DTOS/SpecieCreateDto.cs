@@ -1,11 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ZoologicoCrud.Constants;
 
 namespace ZoologicoCrud.DTOS
 {
     public class SpecieCreateDto
     {
         //[Display(Name="")]
-        [Required(ErrorMessage ="El nombre de la especie es requerida")]
+        [Required(ErrorMessage =Fields.Specie.NameRequired)]
         public string Name { get; set; }
     }
 }
