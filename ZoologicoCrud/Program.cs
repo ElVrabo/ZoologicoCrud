@@ -16,6 +16,8 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(conn
 #region Settings
 builder.Services.Configure<UploadSettings>(
     builder.Configuration.GetSection("UploadSettings"));
+builder.Services.Configure<ZoologicoSettings>(
+    builder.Configuration.GetSection("ZoologicoSettings"));
 #endregion
 #region Services
 builder.Services.AddScoped<IAnimalService,AnimalService>();
@@ -41,6 +43,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Animal}/{action=Index}/{id?}");
 
 app.Run();

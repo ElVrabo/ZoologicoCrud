@@ -7,6 +7,7 @@ using ZoologicoCrud.DTOS;
 using ZoologicoCrud.Models;
 using ZoologicoCrud.Services.Implementations;
 using ZoologicoCrud.Services.Interfaces;
+using ZoologicoCrud.Settings;
 
 namespace ZoologicoCrud.Controllers
 {
@@ -14,12 +15,24 @@ namespace ZoologicoCrud.Controllers
     {
         private readonly IAnimalService _animalService;
         private readonly ISpecieService _specieService;
+    
 
         public AnimalController(IAnimalService animalService, ISpecieService specieService)
         {
             _animalService = animalService;
             _specieService = specieService;
+         
         }
+       
+        public async Task<IActionResult> DetailsPartial(int id)
+        {
+            var animal = await _animalService.GetByIdAsync(id);
+            if (animal == null)
+                return NotFound();
+
+            return PartialView("_DetailsPartial", animal);
+        }
+
         public async Task<IActionResult> Index()
         {
             //Se mapea una entidad a DTO (convertir) para que la vista
@@ -43,18 +56,17 @@ namespace ZoologicoCrud.Controllers
             {
                 await _animalService.AddAsync(animalCreateDto);
                 TempData["SuccessMessage"] = "El animal se registró correctamente.";
-                return RedirectToAction("Index"); // Redirige a la lista, evita reenvíos
             }
             catch(Exception ex) 
             {
-                TempData["ErrorMessage"] = "Ocurrió un error al registrar el animal.";
+                TempData["ErrorMessage"] = $"{ex.Message}";
                 /*Se crea una lista a traves de las especies creadas*/
                 var species = await _specieService.GetAllAsync();
                 /*ViewBag es una forma dinamica de pasar datos desde el controlador hacia la vista*/
                 /*SelectList es una clase de ASP.NET que sirve para crear una lista desplegable*/
                 ViewBag.Species = new SelectList(species, "Id", "Name");
-                return View(animalCreateDto);
             }
+            return RedirectToAction("Index"); // Redirige a la lista, evita reenvíos
         }
         
         public async Task<IActionResult> Edit(int id)
@@ -72,8 +84,14 @@ namespace ZoologicoCrud.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, AnimalCreateDto animalCreateDto)
         {
-            await _animalService.UpdateAsync(id, animalCreateDto);
-            TempData["SuccessMessage"] = "El animal se actualizo con exito";
+            try
+            {
+                await _animalService.UpdateAsync(id, animalCreateDto);
+                TempData["SuccessMessage"] = "El animal se actualizo con exito";
+            }catch(Exception e)
+            {
+                TempData["ErrorMessage"] = $"Ocurrio un error al actualizar{e}";
+            }
             return RedirectToAction("Index");
         }
 

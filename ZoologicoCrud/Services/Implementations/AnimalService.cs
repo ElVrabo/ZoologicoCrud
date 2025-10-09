@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System.Runtime;
 using ZoologicoCrud.Data;
 using ZoologicoCrud.DTOS;
 using ZoologicoCrud.Models;
@@ -13,13 +14,14 @@ namespace ZoologicoCrud.Services.Implementations
         private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _env;
         private readonly UploadSettings _uploadSettings;
+        private readonly ZoologicoSettings _zoologicoSettings;
 
-        public AnimalService(AppDbContext context, IWebHostEnvironment env, IOptions<UploadSettings> uploadSettings)
+        public AnimalService(AppDbContext context, IWebHostEnvironment env, IOptions<UploadSettings> uploadSettings, IOptions<ZoologicoSettings> zoologicoSettings)
         {
             _context = context;
             _env = env;
             _uploadSettings = uploadSettings.Value;
-
+            _zoologicoSettings = zoologicoSettings.Value;
         }
         public async Task<IEnumerable<AnimalReadDto>> GetAllAsync()
         {
@@ -58,6 +60,12 @@ namespace ZoologicoCrud.Services.Implementations
         }
         public async Task AddAsync(AnimalCreateDto animalCreateDto)
         {
+            int totalAnimals = _context.Animals.Count();
+            if(totalAnimals >= _zoologicoSettings.MaxAnimals)
+            {
+                 throw new ApplicationException($"No se pueden registrar más de {_zoologicoSettings.MaxAnimals} animales en el zoológico.");
+                
+            }
             var file = await UploadImage(animalCreateDto.File);
             var animal = new Animal
             {

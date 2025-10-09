@@ -1,0 +1,24 @@
+﻿@model ZoologicoCrud.DTOS.AnimalReadDto
+
+<div class="container text-center">
+    <img src="@Model.FotoUrl" alt="@Model.Name" class="rounded-circle mb-3"
+         style="width:120px;height:120px;object-fit:cover;" />
+    <h4 class="fw-bold text-success">@Model.Name</h4>
+    <p class="text-muted">@Model.Description</p>
+    <p>
+        <strong>Género:</strong>
+        @if (Model.Gender == "Macho")
+        {
+            <span class="badge bg-primary">Macho</span>
+        }
+        else if (Model.Gender == "Hembra")
+        {
+            <span class="badge text-white" style="background-color: #e83e8c;">Hembra</span>
+        }
+        else
+        {
+            <span class="badge bg-secondary">N/A</span>
+        }
+    </p>
+    <p><strong>Especie:</strong> @Model.Specie</p>
+</div>

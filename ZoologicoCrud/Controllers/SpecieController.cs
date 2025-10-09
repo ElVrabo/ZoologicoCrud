@@ -27,9 +27,17 @@ namespace ZoologicoCrud.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(SpecieCreateDto specieCreateDto)
         {
-            await _specieService.AddAsync(specieCreateDto);
-            TempData["SuccessMessage"] = "La especie se agrego exitosamente";
+            try
+            {
+                await _specieService.AddAsync(specieCreateDto);
+                TempData["SuccessMessage"] = "La especie se agrego exitosamente";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "La especie se agrego exitosamente";
+            }
             return RedirectToAction("Index");
+        
 
         }
 
@@ -43,8 +51,15 @@ namespace ZoologicoCrud.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, SpecieCreateDto specieCreateDto)
         {
-            await _specieService.UpdateAsync(id, specieCreateDto);
-            TempData["SuccessMessage"] = "La especie se actualizo con exito";
+            try
+            {
+                await _specieService.UpdateAsync(id, specieCreateDto);
+                TempData["SuccessMessage"] = "La especie se actualizo con exito";
+            }
+            catch(Exception e)
+            {
+                TempData["ErrorMessage"] = $"Ocurrio un error al actualizar{e}";
+            }
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> Delete(int id)
